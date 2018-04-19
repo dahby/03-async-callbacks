@@ -8,10 +8,8 @@ const twoPath = `${__dirname}/data/two.txt`;
 const threePath = `${__dirname}/data/three.txt`;
 
 const files = [onePath, twoPath, threePath];
+const resolvedFiles = [];
 
-const printCharacters = (characters) => {
-  console.log(characters);
-};
 
 const readFileArray = (fileArray, currentIndex, callback) => {
   if (currentIndex >= fileArray.length) {
@@ -20,7 +18,7 @@ const readFileArray = (fileArray, currentIndex, callback) => {
   const currentFilePath = fileArray[currentIndex];
   try {
     return fileReader.readFirst(currentFilePath, (file) => {
-      printCharacters(file);
+      resolvedFiles.push(file);
       readFileArray(fileArray, currentIndex + 1, callback);
     });
   } catch (error) {
@@ -29,4 +27,4 @@ const readFileArray = (fileArray, currentIndex, callback) => {
   return undefined;
 };
 
-readFileArray(files, 0, () => logger.log(logger.INFO, 'All files have been read'));
+readFileArray(files, 0, () => logger.log(logger.INFO, resolvedFiles));
